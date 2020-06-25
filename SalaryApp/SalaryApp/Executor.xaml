@@ -17,10 +17,9 @@
         <Label Content="Список задач" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Comic Sans MS" Grid.Row="1"/>
         <DataGrid x:Name="TasksDG" HorizontalAlignment="Left" Height="379" Margin="0,42,0,0" Grid.Row="1" VerticalAlignment="Top" Width="794" CanUserAddRows="False" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Название" Binding="{Binding Path=Name}" FontFamily="Comic Sans MS" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Тип" Binding="{Binding Path=TypeWork}" IsReadOnly="True" FontFamily="Comic Sans MS"/>
-                <DataGridTextColumn Header="Сложность" Binding="{Binding Path=Complexity}" IsReadOnly="True" FontFamily="Comic Sans MS"/>
-                <DataGridTextColumn Header="Статус" Binding="{Binding Path=Status}" IsReadOnly="True" FontFamily="Comic Sans MS"/>
+                <DataGridTextColumn Header="Заголовок задачи" Binding="{Binding Path=Name}" FontFamily="Comic Sans MS" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Статус задачи" Binding="{Binding Path=Status}" IsReadOnly="True" FontFamily="Comic Sans MS"/>
+                <DataGridTextColumn Header="ФИО менеджера" IsReadOnly="True" FontFamily="Comic Sans MS"/>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -28,8 +27,13 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Дата начала" Binding="{Binding Path=StartTime}" FontFamily="Comic Sans MS" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Дата выполнения" Binding="{Binding Path=EndTime}" FontFamily="Comic Sans MS" IsReadOnly="True"/>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="EditBtn" Content="Подробнее" Click="EditBtn_Click" FontFamily="Comic Sans MS"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="UserBtn" Content="Сменить пользователя" HorizontalAlignment="Left" Margin="554,29,0,0" VerticalAlignment="Top" Width="140" FontFamily="Comic Sans MS" Click="UserBtn_Click"/>

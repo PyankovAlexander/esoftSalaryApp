@@ -112,5 +112,10 @@ namespace SalaryApp
             lf.Show();
             Close();
         }
+
+        private void EditBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
