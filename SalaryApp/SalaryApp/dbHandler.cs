@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Windows;
 
 namespace SalaryApp
 {
@@ -10,6 +11,38 @@ namespace SalaryApp
         List<int> dataId;
         Dictionary<int, string> executors;
         List<double> coeffList;
+
+
+        public string GetUser(int id)
+        {
+
+            MySqlConnection conn = DBUtils.GetDBConnection();
+            conn.Open();
+            try
+            {
+                MySqlCommand command = new MySqlCommand("SELECT FullName FROM `users` WHERE id = '" + id + "'", conn);
+                command.ExecuteNonQuery();
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return reader.GetString(0);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+                conn.Dispose();
+            }
+            return null;
+
+        }
+
 
         public Dictionary<int, string> GetExecutors(MySqlConnection conn, int id)
         {

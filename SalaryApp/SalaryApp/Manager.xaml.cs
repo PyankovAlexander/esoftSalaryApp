@@ -79,6 +79,7 @@ namespace SalaryApp
                 tasksList = new ObservableCollection<TaskTable>();
 
                 dt = new DataTable("tasks");
+                dbHandler db = new dbHandler();
 
                 foreach (KeyValuePair<int, string> keyValue in executors)
                 {
@@ -90,7 +91,7 @@ namespace SalaryApp
 
                 dt.Columns.Add("Исполнитель");
                 foreach (DataRow row in dt.Rows) {
-                    tasksList.Add(new TaskTable(Convert.ToString(row[1]), Convert.ToString(row[2]), GetUser(Convert.ToInt32(row[0]))));
+                    tasksList.Add(new TaskTable(Convert.ToString(row[1]), Convert.ToString(row[2]), db.GetUser(Convert.ToInt32(row[0]))));
                 }
 
                 TasksDG.ItemsSource = tasksList;
@@ -99,33 +100,7 @@ namespace SalaryApp
             }
         }
 
-        private string GetUser(int id) {
 
-            MySqlConnection conn = DBUtils.GetDBConnection();
-            conn.Open();
-            try
-            {
-                MySqlCommand command = new MySqlCommand("SELECT FullName FROM `users` WHERE id = '" + id + "'", conn);
-                command.ExecuteNonQuery();
-                using (DbDataReader reader = command.ExecuteReader())
-                {
-                    if (reader.Read()) {
-                        return reader.GetString(0);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-            }
-            finally
-            {
-                conn.Close();
-                conn.Dispose();
-            }
-            return null;
-
-        }
 
 
         private void CoeffBtn_Click(object sender, RoutedEventArgs e)

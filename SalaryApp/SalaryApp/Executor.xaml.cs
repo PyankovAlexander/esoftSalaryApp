@@ -1,6 +1,8 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Collections.ObjectModel;
 using System.Data;
+using System.Data.Common;
 using System.Windows;
 
 namespace SalaryApp
@@ -14,6 +16,7 @@ namespace SalaryApp
         public string login;
         public string grade;
         DataTable dt;
+        ObservableCollection<TaskTable> tasksList;
 
         public Executor()
         {
@@ -45,18 +48,75 @@ namespace SalaryApp
             }
         }
 
+        class TaskTable
+        {
+
+            public TaskTable(string Name, string Status, string Manager)
+            {
+                this.Name = Name;
+                this.Status = Status;
+                this.Manager = Manager;
+            }
+
+            public string Name { get; set; }
+            public string Status { get; set; }
+            public string Manager { get; set; }
+        }
+
         private void GetTasks(MySqlConnection conn)
         {
 
-            MySqlCommand command = new MySqlCommand("SELECT * FROM `tasks` WHERE Performer = '" + id + "'", conn);
+            MySqlCommand command = new MySqlCommand("SELECT Performer, Name, Status FROM `tasks` WHERE Performer = '" + id + "'", conn);
             command.ExecuteNonQuery();
 
             MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+            tasksList = new ObservableCollection<TaskTable>();
             dt = new DataTable("tasks");
+            dbHandler db = new dbHandler();
             adapter.Fill(dt);
-            TasksDG.ItemsSource = dt.DefaultView;
+
+            foreach (DataRow row in dt.Rows)
+            {
+                var name = Convert.ToString(row[1]);
+                var status = Convert.ToString(row[2]);
+                var managerId = GetManager(Convert.ToInt32(row[0]));
+                var manager = db.GetUser(managerId);
+
+                tasksList.Add(new TaskTable(name, status, manager));
+            }
+
+
+            TasksDG.ItemsSource = tasksList;
             adapter.Update(dt);
 
+        }
+
+        private int GetManager(int id)
+        {
+            MySqlConnection conn = DBUtils.GetDBConnection();
+            conn.Open();
+            try
+            {
+                MySqlCommand command = new MySqlCommand("SELECT Manager FROM `relationship` WHERE Performer = '" + id + "'", conn);
+                command.ExecuteNonQuery();
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return reader.GetInt32(0);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+                conn.Dispose();
+            }
+            return 0;
         }
 
         private void StatusBtn_Click(object sender, RoutedEventArgs e)
