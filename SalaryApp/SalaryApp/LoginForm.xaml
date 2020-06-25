@@ -1,0 +1,27 @@
+﻿<Window x:Class="SalaryApp.LoginForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Esoft SalaryApp | Авторизация" Height="480" Width="640" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="340"/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="160"/>
+            <RowDefinition Height="160"/>
+            <RowDefinition Height="160"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Height="86" Margin="61,35,64,39" VerticalAlignment="Center" Width="215" Source="logo.png"/>
+        <Label Content="Логин" Grid.Column="1" HorizontalAlignment="Left" Margin="39,42,0,0" Grid.Row="1" VerticalAlignment="Top" FontFamily="Comic Sans MS"/>
+        <TextBox x:Name="LoginField" Grid.Column="1" HorizontalAlignment="Center" Height="24" Margin="110,42,64,94" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Width="166" FontFamily="Comic Sans MS"/>
+        <Label Content="Пароль" Grid.Column="1" HorizontalAlignment="Left" Margin="31,98,0,0" Grid.Row="1" VerticalAlignment="Top" FontFamily="Comic Sans MS" RenderTransformOrigin="0.139,0.315"/>
+        <PasswordBox x:Name="PassField" Grid.Column="1" HorizontalAlignment="Center" Margin="110,98,64,38" Grid.Row="1" VerticalAlignment="Center" Width="166" Height="24" FontFamily="Comic Sans MS"/>
+        <Label x:Name="ErrorLabel" Content="обработчик ошибок" Grid.Column="1" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="2" VerticalAlignment="Top" FontFamily="Comic Sans MS" Width="320" Visibility="Hidden"/>
+        <Button x:Name="AuthBtn" Content="Войти" Grid.Column="1" HorizontalAlignment="Left" Margin="110,40,0,0" Grid.Row="2" VerticalAlignment="Top" Width="142" Height="24" Click="AuthBtn_Click" FontFamily="Comic Sans MS"/>
+    </Grid>
+</Window>

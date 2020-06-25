@@ -1,0 +1,28 @@
+﻿<Window x:Class="SalaryApp.AddTask"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SalaryApp"
+        mc:Ignorable="d"
+        Title="Esoft SalaryApp | Добавить задание" Height="600" Width="800" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="200"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="NameField"  Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Height="21" Margin="38,40,0,0" TextWrapping="Wrap" Text="Название задачи" VerticalAlignment="Top" Width="227" FontFamily="Comic Sans MS"/>
+        <ComboBox x:Name="PerfCB" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="38,148,0,0" VerticalAlignment="Top" Width="227" Height="24" RenderTransformOrigin="0.058,0.273"/>
+        <ComboBox x:Name="TypeCB" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Margin="105,148,0,0" VerticalAlignment="Top" Width="222" Height="24">
+        </ComboBox>
+        <TextBox x:Name="ComplexityField"  Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Height="24" Margin="105,40,69,137" TextWrapping="Wrap" Text="Сложность" VerticalAlignment="Center" Width="222" FontFamily="Comic Sans MS"/>
+        <Button x:Name="AddBtn" Content="Добавить" Grid.Column="1" HorizontalAlignment="Left" Margin="105,59,0,0" Grid.Row="2" VerticalAlignment="Top" Width="222" Height="36" Click="AddBtn_Click" FontFamily="Comic Sans MS"/>
+        <Button x:Name="BackBtn" Content="Назад" HorizontalAlignment="Left" Margin="38,59,0,0" Grid.Row="2" VerticalAlignment="Top" Width="227" Height="36" Click="BackBtn_Click" FontFamily="Comic Sans MS"/>
+        <Image HorizontalAlignment="Left" Height="104" Margin="10,10,0,0" VerticalAlignment="Top" Width="255" Source="logo.png"/>
+    </Grid>
+</Window>

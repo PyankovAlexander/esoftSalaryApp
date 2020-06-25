@@ -1,0 +1,15 @@
+﻿<Window x:Class="SalaryApp.Payroll"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SalaryApp"
+        mc:Ignorable="d"
+        Title="Esoft SalaryApp | Расчёт зарплаты" Height="450" Width="800">
+    <Grid>
+        <DataGrid x:Name="SalaryDG" HorizontalAlignment="Left" Height="273" Margin="0,146,0,0" Width="792" VerticalAlignment="Top"/>
+        <Button x:Name="SalaryBtn" Content="Рассчитать зарплату" HorizontalAlignment="Left" Margin="108,105,0,0" VerticalAlignment="Top" Width="190" Height="24" Click="SalaryBtn_Click" FontFamily="Comic Sans MS"/>
+        <Image HorizontalAlignment="Left" Height="100" Margin="10,0,0,0" VerticalAlignment="Top" Width="288" Source="logo.png"/>
+        <Button x:Name="BackBtn" Content="Назад" HorizontalAlignment="Left" Margin="338,105,0,0" VerticalAlignment="Top" Width="184" Height="24" FontFamily="Comic Sans MS" Click="BackBtn_Click"/>
+    </Grid>
+</Window>

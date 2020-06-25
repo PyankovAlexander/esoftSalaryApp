@@ -1,0 +1,41 @@
+﻿<Window x:Class="SalaryApp.Manager"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SalaryApp"
+        mc:Ignorable="d"
+        Title="Esoft SalaryApp | Manager" Height="600" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="450"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" HorizontalAlignment="Left" Height="82" Margin="15,21,0,0" VerticalAlignment="Top" Width="205" Source="logo.png"/>
+        <Label x:Name="LoginLabel" Grid.Row="0" Content="Ваш логин: " HorizontalAlignment="Left" Margin="296,26,0,0" VerticalAlignment="Top" FontFamily="Comic Sans MS"/>
+        <Label x:Name="FullNameLabel" Content="ФИО Менеджера:" HorizontalAlignment="Left" Margin="296,57,0,0" VerticalAlignment="Top" FontFamily="Comic Sans MS"/>
+        <Label Content="Список задач" HorizontalAlignment="Left" Margin="15,10,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Comic Sans MS"/>
+        <DataGrid x:Name="TasksDG" HorizontalAlignment="Left" Height="379" Margin="10,42,0,0" Grid.Row="1" VerticalAlignment="Top" Width="784" CanUserAddRows="False" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Исполнитель" Binding="{Binding Path=Performer}" FontFamily="Comic Sans MS" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Название" Binding="{Binding Path=Name}" FontFamily="Comic Sans MS" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Тип" Binding="{Binding Path=TypeWork}" FontFamily="Comic Sans MS" IsReadOnly="True" />
+                <DataGridTextColumn Header="Сложность" Binding="{Binding Path=Complexity}" FontFamily="Comic Sans MS" IsReadOnly="True" />
+                <DataGridTextColumn Header="Статус" Binding="{Binding Path=Status}" FontFamily="Comic Sans MS" IsReadOnly="True" />
+                <DataGridTextColumn Header="Дата начала" Binding="{Binding Path=StartTime}" FontFamily="Comic Sans MS" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Дата выполнения" Binding="{Binding Path=EndTime}" FontFamily="Comic Sans MS" IsReadOnly="True"/>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="DelBtn" Content="Удалить" Click="DelBtn_Click" FontFamily="Comic Sans MS"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="CoeffBtn" Content="Посмотреть коэффициенты" HorizontalAlignment="Left" Margin="160,101,0,0" VerticalAlignment="Top" Width="174" FontFamily="Comic Sans MS" Click="CoeffBtn_Click"/>
+        <Button x:Name="AddBtn" Content="Добавить задание" HorizontalAlignment="Left" Margin="377,101,0,0" VerticalAlignment="Top" Width="133" Click="AddBtn_Click" FontFamily="Comic Sans MS"/>
+        <Button x:Name="CalculateBtn" Content="Рассчитать зарплату" HorizontalAlignment="Left" Margin="544,101,0,0" VerticalAlignment="Top" Width="174" Click="CalculateBtn_Click" FontFamily="Comic Sans MS"/>
+        <Button x:Name="UserBtn" Content="Сменить пользователя" HorizontalAlignment="Left" Margin="544,26,0,0" VerticalAlignment="Top" Width="174" FontFamily="Comic Sans MS" Click="UserBtn_Click"/>
+    </Grid>
+</Window>
