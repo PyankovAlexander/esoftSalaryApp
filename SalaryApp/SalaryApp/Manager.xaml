@@ -15,11 +15,11 @@
         <Label x:Name="LoginLabel" Grid.Row="0" Content="Ваш логин: " HorizontalAlignment="Left" Margin="296,26,0,0" VerticalAlignment="Top" FontFamily="Comic Sans MS"/>
         <Label x:Name="FullNameLabel" Content="ФИО Менеджера:" HorizontalAlignment="Left" Margin="296,57,0,0" VerticalAlignment="Top" FontFamily="Comic Sans MS"/>
         <Label Content="Список задач" HorizontalAlignment="Left" Margin="15,10,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Comic Sans MS"/>
-        <DataGrid x:Name="TasksDG" HorizontalAlignment="Left" Height="379" Margin="10,42,0,0" Grid.Row="1" VerticalAlignment="Top" Width="784" CanUserAddRows="False" AutoGenerateColumns="False">
+        <DataGrid x:Name="TasksDG" HorizontalAlignment="Left" Height="379" Margin="0,42,0,0" Grid.Row="1" VerticalAlignment="Top" Width="794" CanUserAddRows="False" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Заголовок задачи" Binding="{Binding Path=Name}" FontFamily="Comic Sans MS" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Статус задачи" Binding="{Binding Path=Status}" FontFamily="Comic Sans MS" IsReadOnly="True" />
-                <DataGridTextColumn Header="Исполнитель" Binding="{Binding Path=Performer}" FontFamily="Comic Sans MS" IsReadOnly="True"/>
+                <DataGridTextColumn Header="ФИО исполнителя" Binding="{Binding Path=Executor}" FontFamily="Comic Sans MS" IsReadOnly="True" />
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

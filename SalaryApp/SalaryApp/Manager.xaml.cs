@@ -1,7 +1,9 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
+using System.Data.Common;
 using System.Windows;
 
 
@@ -18,6 +20,7 @@ namespace SalaryApp
         public string fullName;
         DataTable dt;
         Dictionary<int, string> executors;
+        ObservableCollection<TaskTable> tasksList;
 
         public Manager()
         {
@@ -50,26 +53,80 @@ namespace SalaryApp
             }
         }
 
+ 
+        class TaskTable
+        {
+
+            public TaskTable(string Name, string Status, string Executor)
+            {
+                this.Name = Name;
+                this.Status = Status;
+                this.Executor = Executor;
+            }
+
+            public string Name { get; set; }
+            public string Status { get; set; }
+            public string Executor { get; set; }
+        }
+
         private void GetTasks(MySqlConnection conn)
         {
             if (executors.Count != 0)
             {
 
                 MySqlDataAdapter adapter = null;
+
+                tasksList = new ObservableCollection<TaskTable>();
+
                 dt = new DataTable("tasks");
 
                 foreach (KeyValuePair<int, string> keyValue in executors)
                 {
-                    MySqlCommand command = new MySqlCommand("SELECT * FROM `tasks` WHERE Performer = '" + keyValue.Key + "' AND Deleted = 0", conn);
+                    MySqlCommand command = new MySqlCommand("SELECT Performer, Name, Status FROM `tasks` WHERE Performer = '" + keyValue.Key + "' AND Deleted = 0", conn);
                     command.ExecuteNonQuery();
                     adapter = new MySqlDataAdapter(command);
                     adapter.Fill(dt);
                 }
 
-                TasksDG.ItemsSource = dt.DefaultView;
+                dt.Columns.Add("Исполнитель");
+                foreach (DataRow row in dt.Rows) {
+                    tasksList.Add(new TaskTable(Convert.ToString(row[1]), Convert.ToString(row[2]), GetUser(Convert.ToInt32(row[0]))));
+                }
+
+                TasksDG.ItemsSource = tasksList;
+                //TasksDG.ItemsSource = dt.DefaultView;
                 adapter.Update(dt);
             }
         }
+
+        private string GetUser(int id) {
+
+            MySqlConnection conn = DBUtils.GetDBConnection();
+            conn.Open();
+            try
+            {
+                MySqlCommand command = new MySqlCommand("SELECT FullName FROM `users` WHERE id = '" + id + "'", conn);
+                command.ExecuteNonQuery();
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read()) {
+                        return reader.GetString(0);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+                conn.Dispose();
+            }
+            return null;
+
+        }
+
 
         private void CoeffBtn_Click(object sender, RoutedEventArgs e)
         {
