@@ -182,17 +182,18 @@ namespace SalaryApp
 
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
-            /*var selectedIndex = TasksDG.SelectedIndex;
+            var selectedIndex = TasksDG.SelectedIndex;
             var taskID = dt.Rows[selectedIndex][0];
             AddTask addForm = new AddTask
             {
                 id = id,
                 login = login,
                 fullName = fullName,
-                taskID = Convert.ToInt32(taskID)
+                taskID = Convert.ToInt32(taskID),
+                acc = "manager"
             };
             addForm.Show();
-            Close(); */
+            Close();
         }
 
         private void ExecutorsCB_DropDownClosed(object sender, EventArgs e)

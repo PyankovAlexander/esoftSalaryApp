@@ -17,6 +17,7 @@ namespace SalaryApp
         public string fullName;
         public string grade;
         public int taskID = 0;
+        public string acc = null;
 
         List<string> typeList;
         Dictionary<int, string> executors;
@@ -160,7 +161,7 @@ namespace SalaryApp
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (taskID == 0)
+            if (acc == "manager")
             {
                 Manager manForm = new Manager
                 {
