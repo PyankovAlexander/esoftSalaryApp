@@ -121,7 +121,7 @@ namespace SalaryApp
                         dt.Rows[selectedIndex][5] = DateTime.Now;
                         break;
                     case MessageBoxResult.No:
-                        dt.Rows[selectedIndex][3] = "Отменена";
+                        tasksList[selectedIndex] = new TaskTable(tasksList[selectedIndex].Name, "Отменена", tasksList[selectedIndex].Manager);
                         break;
                 }
             }
