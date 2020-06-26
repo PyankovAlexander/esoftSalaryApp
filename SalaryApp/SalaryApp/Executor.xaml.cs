@@ -1,9 +1,12 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
 using System.Windows;
+using System.Windows.Data;
 
 namespace SalaryApp
 {
@@ -17,6 +20,7 @@ namespace SalaryApp
         public string grade;
         DataTable dt;
         ObservableCollection<TaskTable> tasksList;
+        ICollectionView Itemlist;
 
         public Executor()
         {
@@ -29,6 +33,9 @@ namespace SalaryApp
 
             LoginLabel.Content = "Ваш логин: " + login;
             GradeLabel.Content = "Должность: " + grade;
+
+            var statusList = new List<string>() { "Любой статус", "Запланирована", "Выполняется", "Завершена", "Отменена" };
+            StatusCB.ItemsSource = statusList;
 
             MySqlConnection conn = DBUtils.GetDBConnection();
             conn.Open();
@@ -176,6 +183,27 @@ namespace SalaryApp
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void StatusCB_DropDownClosed(object sender, EventArgs e)
+        {
+            if (StatusCB.Text.Equals("Любой статус"))
+            {
+                TasksDG.ItemsSource = tasksList;
+            }
+            else
+            {
+                var _itemSourceList = new CollectionViewSource() { Source = tasksList };
+                Itemlist = _itemSourceList.View;
+
+                GroupFilter gf = new GroupFilter();
+
+                var statusFilter = new Predicate<object>(item => ((TaskTable)item).Status.Equals(StatusCB.Text));
+                gf.AddFilter(statusFilter);
+
+                Itemlist.Filter = gf.Filter;
+                TasksDG.ItemsSource = Itemlist;
+            }
         }
     }
 }

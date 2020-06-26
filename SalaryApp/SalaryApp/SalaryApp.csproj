@@ -91,6 +91,7 @@
     <Compile Include="Executor.xaml.cs">
       <DependentUpon>Executor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GroupFilter.cs" />
     <Compile Include="LoginForm.xaml.cs">
       <DependentUpon>LoginForm.xaml</DependentUpon>
       <SubType>Code</SubType>

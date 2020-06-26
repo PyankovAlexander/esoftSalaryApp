@@ -40,5 +40,7 @@
         <Button x:Name="AddBtn" Content="Добавить задание" HorizontalAlignment="Left" Margin="377,101,0,0" VerticalAlignment="Top" Width="133" Click="AddBtn_Click" FontFamily="Comic Sans MS"/>
         <Button x:Name="CalculateBtn" Content="Рассчитать зарплату" HorizontalAlignment="Left" Margin="544,101,0,0" VerticalAlignment="Top" Width="174" Click="CalculateBtn_Click" FontFamily="Comic Sans MS"/>
         <Button x:Name="UserBtn" Content="Сменить пользователя" HorizontalAlignment="Left" Margin="544,26,0,0" VerticalAlignment="Top" Width="174" FontFamily="Comic Sans MS" Click="UserBtn_Click"/>
+        <ComboBox x:Name="ExecutorsCB" Text="Все исполнители" Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Top" Width="260" Margin="160,10,0,0" DropDownClosed="ExecutorsCB_DropDownClosed" Grid.Row="1" FontFamily="Comic Sans MS" IsEditable="True" IsReadOnly="True"/>
+        <ComboBox x:Name="StatusCB" Text="Любой статус" Focusable="False" HorizontalAlignment="Left" Height="22" Margin="453,11,0,0" Grid.Row="1" VerticalAlignment="Top" Width="158" DropDownClosed="StatusCB_DropDownClosed" IsEditable="True" IsReadOnly="True"/>
     </Grid>
 </Window>

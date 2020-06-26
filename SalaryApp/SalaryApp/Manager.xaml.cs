@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data;
-using System.Data.Common;
 using System.Windows;
-
+using System.Windows.Data;
 
 namespace SalaryApp
 {
@@ -21,6 +21,7 @@ namespace SalaryApp
         DataTable dt;
         Dictionary<int, string> executors;
         ObservableCollection<TaskTable> tasksList;
+        ICollectionView Itemlist;
 
         public Manager()
         {
@@ -33,12 +34,21 @@ namespace SalaryApp
             LoginLabel.Content = "Ваш логин: " + login;
             FullNameLabel.Content = "ФИО Менеджера: " + fullName;
 
+            var statusList = new List<string>() { "Любой статус", "Запланирована", "Выполняется", "Завершена", "Отменена" };
+            StatusCB.ItemsSource = statusList;
+
+
             MySqlConnection conn = DBUtils.GetDBConnection();
             conn.Open();
             try
             {
                 dbHandler db = new dbHandler();
                 executors = db.GetExecutors(conn, id);
+                ExecutorsCB.Items.Add("Все исполнители");
+                foreach (KeyValuePair<int, string> keyValue in executors)
+                {
+                    ExecutorsCB.Items.Add(keyValue.Value);
+                }
                 GetTasks(conn);
 
             }
@@ -53,7 +63,7 @@ namespace SalaryApp
             }
         }
 
- 
+
         class TaskTable
         {
 
@@ -89,19 +99,15 @@ namespace SalaryApp
                     adapter.Fill(dt);
                 }
 
-                dt.Columns.Add("Исполнитель");
-                foreach (DataRow row in dt.Rows) {
+                foreach (DataRow row in dt.Rows)
+                {
                     tasksList.Add(new TaskTable(Convert.ToString(row[1]), Convert.ToString(row[2]), db.GetUser(Convert.ToInt32(row[0]))));
                 }
 
                 TasksDG.ItemsSource = tasksList;
-                //TasksDG.ItemsSource = dt.DefaultView;
                 adapter.Update(dt);
             }
         }
-
-
-
 
         private void CoeffBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -173,6 +179,63 @@ namespace SalaryApp
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void ExecutorsCB_DropDownClosed(object sender, EventArgs e)
+        {
+            if (ExecutorsCB.Text.Equals("Все исполнители") && StatusCB.Text.Equals("Любой статус"))
+            {
+                TasksDG.ItemsSource = tasksList;
+            }
+            else
+            {
+                var _itemSourceList = new CollectionViewSource() { Source = tasksList };
+                Itemlist = _itemSourceList.View;
+
+                GroupFilter gf = new GroupFilter();
+
+                if (!ExecutorsCB.Text.Equals("Все исполнители")) { 
+                    var nameFilter = new Predicate<object>(item => ((TaskTable)item).Executor.Equals(ExecutorsCB.Text));
+                    gf.AddFilter(nameFilter);
+                }
+                if (!StatusCB.Text.Equals("Любой статус"))
+                {
+                    var statusFilter = new Predicate<object>(item => ((TaskTable)item).Status.Equals(StatusCB.Text));
+                    gf.AddFilter(statusFilter);
+                }        
+
+                Itemlist.Filter = gf.Filter;
+                TasksDG.ItemsSource = Itemlist;
+            }
+        }
+
+        private void StatusCB_DropDownClosed(object sender, EventArgs e)
+        {
+            if (ExecutorsCB.Text.Equals("Все исполнители") && StatusCB.Text.Equals("Любой статус"))
+            {
+                TasksDG.ItemsSource = tasksList;
+            }
+            else
+            {
+                var _itemSourceList = new CollectionViewSource() { Source = tasksList };
+                Itemlist = _itemSourceList.View;
+
+                GroupFilter gf = new GroupFilter();
+
+                if (!ExecutorsCB.Text.Equals("Все исполнители"))
+                {
+                    var nameFilter = new Predicate<object>(item => ((TaskTable)item).Executor.Equals(ExecutorsCB.Text));
+                    gf.AddFilter(nameFilter);
+                }
+                if (!StatusCB.Text.Equals("Любой статус"))
+                {
+                    var statusFilter = new Predicate<object>(item => ((TaskTable)item).Status.Equals(StatusCB.Text));
+                    gf.AddFilter(statusFilter);
+                }
+
+                Itemlist.Filter = gf.Filter;
+                TasksDG.ItemsSource = Itemlist;
+            }
         }
     }
 }
