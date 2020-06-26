@@ -8,21 +8,29 @@
         Title="Esoft SalaryApp | Добавить задание" Height="600" Width="800" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="200"/>
-            <RowDefinition Height="200"/>
-            <RowDefinition Height="200"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="400"/>
+            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <TextBox x:Name="NameField"  Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Height="21" Margin="38,40,0,0" TextWrapping="Wrap" Text="Название задачи" VerticalAlignment="Top" Width="227" FontFamily="Comic Sans MS"/>
-        <ComboBox x:Name="PerfCB" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="38,148,0,0" VerticalAlignment="Top" Width="227" Height="24" RenderTransformOrigin="0.058,0.273"/>
-        <ComboBox x:Name="TypeCB" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Margin="105,148,0,0" VerticalAlignment="Top" Width="222" Height="24">
-        </ComboBox>
-        <TextBox x:Name="ComplexityField"  Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Height="24" Margin="105,40,69,137" TextWrapping="Wrap" Text="Сложность" VerticalAlignment="Center" Width="222" FontFamily="Comic Sans MS"/>
-        <Button x:Name="AddBtn" Content="Добавить" Grid.Column="1" HorizontalAlignment="Left" Margin="105,59,0,0" Grid.Row="2" VerticalAlignment="Top" Width="222" Height="36" Click="AddBtn_Click" FontFamily="Comic Sans MS"/>
-        <Button x:Name="BackBtn" Content="Назад" HorizontalAlignment="Left" Margin="38,59,0,0" Grid.Row="2" VerticalAlignment="Top" Width="227" Height="36" Click="BackBtn_Click" FontFamily="Comic Sans MS"/>
-        <Image HorizontalAlignment="Left" Height="104" Margin="10,10,0,0" VerticalAlignment="Top" Width="255" Source="logo.png"/>
+        <TextBox x:Name="NameField"  Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Height="21" Margin="38,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="227" FontFamily="Comic Sans MS"/>
+        <ComboBox x:Name="PerfCB" Text="Выберите исполнителя" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="105,74,0,0" VerticalAlignment="Top" Width="227" Height="24" RenderTransformOrigin="0.058,0.273" IsEditable="True" IsReadOnly="True" Focusable="False"/>
+        <ComboBox x:Name="TypeCB" Text="Выберите тип задачи" Grid.Row="1" HorizontalAlignment="Left" Margin="36,90,0,0" VerticalAlignment="Top" Width="222" Height="24" IsEditable="True" IsReadOnly="True" Focusable="False"/>
+        <TextBox x:Name="ComplexityField"  Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Height="24" Margin="105,34,70,342" TextWrapping="Wrap" VerticalAlignment="Center" Width="222" FontFamily="Comic Sans MS"/>
+        <Button x:Name="AddBtn" Content="Добавить" Grid.Column="1" HorizontalAlignment="Left" Margin="105,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="222" Height="36" Click="AddBtn_Click" FontFamily="Comic Sans MS"/>
+        <Button x:Name="BackBtn" Content="Назад" HorizontalAlignment="Left" Margin="38,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="227" Height="36" Click="BackBtn_Click" FontFamily="Comic Sans MS"/>
+        <Image HorizontalAlignment="Left" Height="90" Margin="10,10,0,0" VerticalAlignment="Top" Width="255" Source="logo.png"/>
+        <TextBox x:Name="DescTB" HorizontalAlignment="Left" Height="84" Margin="38,161,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="227"/>
+        <Label Content="Заголовок задачи" HorizontalAlignment="Left" Margin="36,14,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <Label Content="Описание задачи" HorizontalAlignment="Left" Margin="36,130,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <Label Content="Сложность" Grid.Column="1" HorizontalAlignment="Left" Margin="105,8,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <DatePicker x:Name="NeedData" Grid.Column="1" HorizontalAlignment="Left" Margin="105,224,0,0" Grid.Row="1" VerticalAlignment="Top" Width="222" FontFamily="Comic Sans MS"/>
+        <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="22" Margin="110,130,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Дата начала" VerticalAlignment="Top" Width="222" IsReadOnly="True"/>
+        <TextBox x:Name="NeedTime" Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="105,270,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Время окончания" VerticalAlignment="Top" Width="222"/>
+        <TextBox x:Name="StatusTB" HorizontalAlignment="Left" Height="23" Margin="38,267,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Статус задачи" VerticalAlignment="Top" Width="222" FontFamily="Comic Sans MS" IsReadOnly="True"/>
+        <Label Content="Дедлайн по задаче" Grid.Column="1" HorizontalAlignment="Left" Margin="105,184,0,0" Grid.Row="1" VerticalAlignment="Top"/>
     </Grid>
 </Window>

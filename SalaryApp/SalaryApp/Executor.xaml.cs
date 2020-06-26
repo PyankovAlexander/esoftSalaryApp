@@ -132,7 +132,7 @@ namespace SalaryApp
             if (dt.Rows[TasksDG.SelectedIndex][4].Equals("Запланирована"))
             {
                 dt.Rows[TasksDG.SelectedIndex][4] = "Выполняется";
-                dt.Rows[TasksDG.SelectedIndex][6] = DateTime.Now;
+                //dt.Rows[TasksDG.SelectedIndex][6] = DateTime.Now;
             }
             else if (dt.Rows[TasksDG.SelectedIndex][4].Equals("Выполняется"))
             {
@@ -154,9 +154,8 @@ namespace SalaryApp
             try
             {
 
-                MySqlCommand command = new MySqlCommand("UPDATE `tasks` SET Status = @Status, StartTime = @ST, EndTime = @ET WHERE id = '" + taskID + "'", conn);
+                MySqlCommand command = new MySqlCommand("UPDATE `tasks` SET Status = @Status, EndTime = @ET WHERE id = '" + taskID + "'", conn);
                 command.Parameters.Add("@Status", MySqlDbType.Enum).Value = dt.Rows[TasksDG.SelectedIndex][4];
-                command.Parameters.Add("@ST", MySqlDbType.DateTime).Value = dt.Rows[TasksDG.SelectedIndex][6];
                 command.Parameters.Add("@ET", MySqlDbType.DateTime).Value = dt.Rows[TasksDG.SelectedIndex][7];
                 command.ExecuteNonQuery();
 
