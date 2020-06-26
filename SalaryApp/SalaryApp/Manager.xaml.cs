@@ -155,7 +155,8 @@ namespace SalaryApp
             {
                 id = id,
                 login = login,
-                fullName = fullName
+                fullName = fullName,
+                acc = "manager"
             };
             addForm.Show();
             Close();
