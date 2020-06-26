@@ -1,6 +1,8 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
 using System.Windows;
 
 namespace SalaryApp
@@ -13,6 +15,8 @@ namespace SalaryApp
         public int id = 0;
         public string login;
         public string fullName;
+        public string grade;
+        public int taskID = 0;
 
         List<string> typeList;
         Dictionary<int, string> executors;
@@ -26,23 +30,39 @@ namespace SalaryApp
 
         private void AddTask_Loaded(object sender, RoutedEventArgs e)
         {
-
-            typeList = new List<string>() { "Анализ и проектирование", "Установка оборудования", "Техническое обслуживание и сопровождение" };
-            TypeCB.ItemsSource = typeList;
-            StatusTB.Text = "Запланирована";
-
+            if (taskID == 0)
+            {
+                typeList = new List<string>() { "Анализ и проектирование", "Установка оборудования", "Техническое обслуживание и сопровождение" };
+                TypeCB.ItemsSource = typeList;
+                StatusTB.Text = "Запланирована";
+            }
+            else
+            {
+                NameField.IsReadOnly = true;
+                DescTB.IsReadOnly = true;
+                ComplexityField.IsReadOnly = true;
+                NeedTime.IsReadOnly = true;
+                AddBtn.IsEnabled = false;
+            }
             MySqlConnection conn = DBUtils.GetDBConnection();
             conn.Open();
             try
             {
-                List<string> perfList = new List<string>();
-                dbHandler db = new dbHandler();
-                executors = db.GetExecutors(conn, id);
-                foreach (KeyValuePair<int, string> keyValue in executors)
+                if (taskID == 0)
                 {
-                    perfList.Add(keyValue.Value);
+                    List<string> perfList = new List<string>();
+                    dbHandler db = new dbHandler();
+                    executors = db.GetExecutors(conn, id);
+                    foreach (KeyValuePair<int, string> keyValue in executors)
+                    {
+                        perfList.Add(keyValue.Value);
+                    }
+                    PerfCB.ItemsSource = perfList;
                 }
-                PerfCB.ItemsSource = perfList;
+                else
+                {
+                    GetTask(conn, taskID);
+                }
             }
             catch (Exception ex)
             {
@@ -54,6 +74,44 @@ namespace SalaryApp
                 conn.Dispose();
             }
 
+        }
+
+        private void GetTask(MySqlConnection conn, int taskID)
+        {
+
+            MySqlCommand command = new MySqlCommand("SELECT Name, Description, Complexity, Status, TypeWork, NeedTime, StartTime, EndTime FROM `tasks` WHERE id = '" + taskID + "'", conn);
+
+            using (DbDataReader reader = command.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+
+                    var name = reader.GetString(0);
+                    var comp = reader.GetInt32(2);
+                    var status = reader.GetString(3);
+                    var type = reader.GetString(4);
+
+                    NameField.Text = name;
+                    if (!reader.IsDBNull(1))
+                    {
+                        DescTB.Text = reader.GetString(1);
+                    }
+
+                    ComplexityField.Text = comp.ToString();
+                    StatusTB.Text = status;
+                    TypeCB.Text = type;
+
+                    if (!reader.IsDBNull(5))
+                    {
+                        NeedData.SelectedDate = reader.GetDateTime(5);
+                        NeedTime.Text = reader.GetDateTime(5).TimeOfDay.ToString();
+                    }
+                    if (!reader.IsDBNull(6))
+                        StartTime.Text = reader.GetString(6);
+                    if (!reader.IsDBNull(7))
+                        EndTime.Text = reader.GetString(7);
+                }
+            }
         }
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
@@ -102,14 +160,28 @@ namespace SalaryApp
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
-            Manager manForm = new Manager
+            if (taskID == 0)
             {
-                id = id,
-                login = login,
-                fullName = fullName
-            };
-            manForm.Show();
-            Close();
+                Manager manForm = new Manager
+                {
+                    id = id,
+                    login = login,
+                    fullName = fullName
+                };
+                manForm.Show();
+                Close();
+            }
+            else
+            {
+                Executor exForm = new Executor
+                {
+                    id = id,
+                    login = login,
+                    grade = grade
+                };
+                exForm.Show();
+                Close();
+            }
         }
     }
 }

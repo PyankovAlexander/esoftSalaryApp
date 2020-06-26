@@ -93,7 +93,7 @@ namespace SalaryApp
 
                 foreach (KeyValuePair<int, string> keyValue in executors)
                 {
-                    MySqlCommand command = new MySqlCommand("SELECT Performer, Name, Status FROM `tasks` WHERE Performer = '" + keyValue.Key + "' AND Deleted = 0", conn);
+                    MySqlCommand command = new MySqlCommand("SELECT id, Performer, Name, Status FROM `tasks` WHERE Performer = '" + keyValue.Key + "' AND Deleted = 0", conn);
                     command.ExecuteNonQuery();
                     adapter = new MySqlDataAdapter(command);
                     adapter.Fill(dt);
@@ -101,9 +101,9 @@ namespace SalaryApp
 
                 foreach (DataRow row in dt.Rows)
                 {
-                    var name = Convert.ToString(row[1]);
-                    var status = Convert.ToString(row[2]);
-                    var executor = db.GetUser(Convert.ToInt32(row[0]));
+                    var name = Convert.ToString(row[2]);
+                    var status = Convert.ToString(row[3]);
+                    var executor = db.GetUser(Convert.ToInt32(row[1]));
 
                     tasksList.Add(new TaskTable(name, status, executor));
                 }
@@ -182,7 +182,17 @@ namespace SalaryApp
 
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            /*var selectedIndex = TasksDG.SelectedIndex;
+            var taskID = dt.Rows[selectedIndex][0];
+            AddTask addForm = new AddTask
+            {
+                id = id,
+                login = login,
+                fullName = fullName,
+                taskID = Convert.ToInt32(taskID)
+            };
+            addForm.Show();
+            Close(); */
         }
 
         private void ExecutorsCB_DropDownClosed(object sender, EventArgs e)

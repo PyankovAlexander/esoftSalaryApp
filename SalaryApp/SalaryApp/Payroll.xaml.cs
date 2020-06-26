@@ -95,7 +95,7 @@ namespace SalaryApp
                         {
                             grade = coeffList[0];
                         }
-                        else if (gradeString.Equals(" middle"))
+                        else if (gradeString.Equals("middle"))
                         {
                             grade = coeffList[1];
                         }
