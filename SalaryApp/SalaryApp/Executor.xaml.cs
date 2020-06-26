@@ -73,7 +73,7 @@ namespace SalaryApp
         private void GetTasks(MySqlConnection conn)
         {
 
-            MySqlCommand command = new MySqlCommand("SELECT Performer, Name, Status FROM `tasks` WHERE Performer = '" + id + "'", conn);
+            MySqlCommand command = new MySqlCommand("SELECT id, Performer, Name, Status, NeedTime, EndTime FROM `tasks` WHERE Performer = '" + id + "'", conn);
             command.ExecuteNonQuery();
 
             MySqlDataAdapter adapter = new MySqlDataAdapter(command);
@@ -84,9 +84,9 @@ namespace SalaryApp
 
             foreach (DataRow row in dt.Rows)
             {
-                var name = Convert.ToString(row[1]);
-                var status = Convert.ToString(row[2]);
-                var managerId = GetManager(Convert.ToInt32(row[0]));
+                var name = Convert.ToString(row[2]);
+                var status = Convert.ToString(row[3]);
+                var managerId = GetManager(Convert.ToInt32(row[1]));
                 var manager = db.GetUser(managerId);
 
                 tasksList.Add(new TaskTable(name, status, manager));
@@ -128,23 +128,29 @@ namespace SalaryApp
 
         private void StatusBtn_Click(object sender, RoutedEventArgs e)
         {
-            var taskID = dt.Rows[TasksDG.SelectedIndex][0];
-            if (dt.Rows[TasksDG.SelectedIndex][4].Equals("Запланирована"))
+            var selectedIndex = TasksDG.SelectedIndex;
+            var taskID = dt.Rows[selectedIndex][0]; 
+            if (tasksList[selectedIndex].Status.Equals("Запланирована"))
             {
-                dt.Rows[TasksDG.SelectedIndex][4] = "Выполняется";
-                //dt.Rows[TasksDG.SelectedIndex][6] = DateTime.Now;
+                tasksList[selectedIndex] = new TaskTable(tasksList[selectedIndex].Name, "Выполняется", tasksList[selectedIndex].Manager);
             }
-            else if (dt.Rows[TasksDG.SelectedIndex][4].Equals("Выполняется"))
+            else if (tasksList[selectedIndex].Status.Equals("Выполняется"))
             {
                 MessageBoxResult result = MessageBox.Show("Задача выполнена?", "My App", MessageBoxButton.YesNoCancel);
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
-                        dt.Rows[TasksDG.SelectedIndex][4] = "Завершена";
-                        dt.Rows[TasksDG.SelectedIndex][7] = DateTime.Now;
+                        if (DateTime.Now > Convert.ToDateTime(dt.Rows[selectedIndex][4]))
+                        {
+                            MessageBox.Show("Задание просрочено!");
+                            tasksList[selectedIndex] = new TaskTable(tasksList[selectedIndex].Name, "Отменена", tasksList[selectedIndex].Manager);
+                            break;
+                        }
+                        tasksList[selectedIndex] = new TaskTable(tasksList[selectedIndex].Name, "Завершена", tasksList[selectedIndex].Manager);
+                        dt.Rows[selectedIndex][5] = DateTime.Now;
                         break;
                     case MessageBoxResult.No:
-                        dt.Rows[TasksDG.SelectedIndex][4] = "Отменена";
+                        dt.Rows[selectedIndex][3] = "Отменена";
                         break;
                 }
             }
@@ -155,8 +161,8 @@ namespace SalaryApp
             {
 
                 MySqlCommand command = new MySqlCommand("UPDATE `tasks` SET Status = @Status, EndTime = @ET WHERE id = '" + taskID + "'", conn);
-                command.Parameters.Add("@Status", MySqlDbType.Enum).Value = dt.Rows[TasksDG.SelectedIndex][4];
-                command.Parameters.Add("@ET", MySqlDbType.DateTime).Value = dt.Rows[TasksDG.SelectedIndex][7];
+                command.Parameters.Add("@Status", MySqlDbType.Enum).Value = tasksList[selectedIndex].Status;
+                command.Parameters.Add("@ET", MySqlDbType.DateTime).Value = dt.Rows[selectedIndex][5];
                 command.ExecuteNonQuery();
 
             }

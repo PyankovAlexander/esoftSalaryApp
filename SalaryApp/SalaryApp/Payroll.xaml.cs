@@ -74,7 +74,7 @@ namespace SalaryApp
 
                     dt = new DataTable("tasks");
 
-                    MySqlCommand command = new MySqlCommand("SELECT * FROM `tasks` WHERE Performer = '" + keyValue.Key + "' AND Deleted = 0 AND Status = 'Завершена'", conn);
+                    MySqlCommand command = new MySqlCommand("SELECT Complexity, TypeWork, NeedTime, EndTime FROM `tasks` WHERE Performer = '" + keyValue.Key + "' AND Deleted = 0 AND Status = 'Завершена'", conn);
                     command.ExecuteNonQuery();
 
                     adapter = new MySqlDataAdapter(command);
@@ -102,15 +102,15 @@ namespace SalaryApp
                         else
                             grade = coeffList[2];
 
-                        var comp = Convert.ToDouble(row[3]);
-                        var type = row[5].ToString();
+                        var comp = Convert.ToDouble(row[0]);
+                        var type = row[1].ToString();
                         if (type.Equals("Анализ и проектирование"))
                             typeCoeff = coeffList[3];
                         else if (type.Equals("Установка оборудования"))
                             typeCoeff = coeffList[4];
                         else
                             typeCoeff = coeffList[5];
-                        var timeSpan = Convert.ToDateTime(row[7]) - Convert.ToDateTime(row[6]);
+                        var timeSpan = Convert.ToDateTime(row[2]) - Convert.ToDateTime(row[3]);
                         var time = (timeSpan.Days * 24 + timeSpan.Hours) * 60 + timeSpan.Minutes;
                         var DR = coeffList[6];
                         var TR = coeffList[7];
