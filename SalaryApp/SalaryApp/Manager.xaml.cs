@@ -133,7 +133,7 @@ namespace SalaryApp
             try
             {
                 var taskID = dt.Rows[TasksDG.SelectedIndex][0];
-                dt.Rows.RemoveAt(TasksDG.SelectedIndex);
+                tasksList.RemoveAt(TasksDG.SelectedIndex);
                 MySqlCommand command = new MySqlCommand("UPDATE `tasks` SET Deleted = 1 WHERE id = '" + taskID + "'", conn);
                 command.ExecuteNonQuery();
 
