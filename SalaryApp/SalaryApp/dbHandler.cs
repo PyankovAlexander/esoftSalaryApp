@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Common;
 using System.Windows;
 
@@ -43,6 +44,33 @@ namespace SalaryApp
 
         }
 
+        public int GetManager(int id)
+        {
+            MySqlConnection conn = DBUtils.GetDBConnection();
+            conn.Open();
+            try
+            {
+                MySqlCommand command = new MySqlCommand("SELECT Manager FROM `relationship` WHERE Performer = '" + id + "'", conn);
+                command.ExecuteNonQuery();
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return reader.GetInt32(0);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+                conn.Dispose();
+            }
+            return 0;
+        }
 
         public Dictionary<int, string> GetExecutors(MySqlConnection conn, int id)
         {

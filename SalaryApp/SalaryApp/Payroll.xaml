@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SalaryApp"
         mc:Ignorable="d"
-        Title="Esoft SalaryApp | Расчёт зарплаты" Height="450" Width="800">
+        Title="Esoft SalaryApp | Расчёт зарплаты" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <DataGrid x:Name="SalaryDG" HorizontalAlignment="Left" Height="273" Margin="0,146,0,0" Width="792" VerticalAlignment="Top"/>
         <Button x:Name="SalaryBtn" Content="Рассчитать зарплату" HorizontalAlignment="Left" Margin="108,105,0,0" VerticalAlignment="Top" Width="190" Height="24" Click="SalaryBtn_Click" FontFamily="Comic Sans MS"/>

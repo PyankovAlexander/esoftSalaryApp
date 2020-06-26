@@ -101,7 +101,11 @@ namespace SalaryApp
 
                 foreach (DataRow row in dt.Rows)
                 {
-                    tasksList.Add(new TaskTable(Convert.ToString(row[1]), Convert.ToString(row[2]), db.GetUser(Convert.ToInt32(row[0]))));
+                    var name = Convert.ToString(row[1]);
+                    var status = Convert.ToString(row[2]);
+                    var executor = db.GetUser(Convert.ToInt32(row[0]));
+
+                    tasksList.Add(new TaskTable(name, status, executor));
                 }
 
                 TasksDG.ItemsSource = tasksList;

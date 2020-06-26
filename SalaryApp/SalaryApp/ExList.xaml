@@ -1,0 +1,20 @@
+﻿<Window x:Class="SalaryApp.ExList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SalaryApp"
+        mc:Ignorable="d"
+        Title="Esoft SalaryApp | Список исполнителей" Height="600" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <DataGrid x:Name="ExListDG" HorizontalAlignment="Left" Height="419" Margin="0,152,0,0" VerticalAlignment="Top" Width="794" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ФИО исполнителя" Binding="{Binding Path=Executor}" FontFamily="Comic Sans MS" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Должность" Binding="{Binding Path=Grade}" IsReadOnly="True" FontFamily="Comic Sans MS"/>
+                <DataGridTextColumn Header="ФИО менеджера" Binding="{Binding Path=Manager}" IsReadOnly="True" FontFamily="Comic Sans MS"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="BackBtn" Content="Назад" HorizontalAlignment="Left" Margin="525,78,0,0" VerticalAlignment="Top" Width="75" Click="BackBtn_Click"/>
+
+    </Grid>
+</Window>

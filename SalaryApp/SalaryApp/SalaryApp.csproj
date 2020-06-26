@@ -71,6 +71,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ExList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginForm.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -90,6 +94,9 @@
     <Compile Include="DBUtils.cs" />
     <Compile Include="Executor.xaml.cs">
       <DependentUpon>Executor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExList.xaml.cs">
+      <DependentUpon>ExList.xaml</DependentUpon>
     </Compile>
     <Compile Include="GroupFilter.cs" />
     <Compile Include="LoginForm.xaml.cs">

@@ -86,44 +86,15 @@ namespace SalaryApp
             {
                 var name = Convert.ToString(row[2]);
                 var status = Convert.ToString(row[3]);
-                var managerId = GetManager(Convert.ToInt32(row[1]));
+                var managerId = db.GetManager(Convert.ToInt32(row[1]));
                 var manager = db.GetUser(managerId);
 
                 tasksList.Add(new TaskTable(name, status, manager));
             }
 
-
             TasksDG.ItemsSource = tasksList;
             adapter.Update(dt);
 
-        }
-
-        private int GetManager(int id)
-        {
-            MySqlConnection conn = DBUtils.GetDBConnection();
-            conn.Open();
-            try
-            {
-                MySqlCommand command = new MySqlCommand("SELECT Manager FROM `relationship` WHERE Performer = '" + id + "'", conn);
-                command.ExecuteNonQuery();
-                using (DbDataReader reader = command.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        return reader.GetInt32(0);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-            }
-            finally
-            {
-                conn.Close();
-                conn.Dispose();
-            }
-            return 0;
         }
 
         private void StatusBtn_Click(object sender, RoutedEventArgs e)
@@ -209,6 +180,17 @@ namespace SalaryApp
                 Itemlist.Filter = gf.Filter;
                 TasksDG.ItemsSource = Itemlist;
             }
+        }
+
+        private void ExBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ExList exForm = new ExList {
+                id = id,
+                login = login,
+                grade = grade
+            };
+            exForm.Show();
+            Close();
         }
     }
 }
